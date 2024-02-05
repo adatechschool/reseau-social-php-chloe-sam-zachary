@@ -4,3 +4,6 @@ Lundi 5/2
 -   organisation du groupe : méthodes de travail, préférences, fonctionnement, outils (Miro)
 -   télécharger XAMPP + installation
 -   test sur port 8000 (cf. tuto)
+-   télécharger dossier "Niveau 1"
+-   importer dans phpMyAdmin
+

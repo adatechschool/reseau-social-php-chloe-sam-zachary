@@ -31,7 +31,7 @@
          * Etape 1: Ouvrir une connexion avec la base de donnée.
          */
         // on va en avoir besoin pour la suite
-        $mysqli = new mysqli("localhost", "root", "root", "socialnetwork");
+        $mysqli = new mysqli("localhost", "root", "", "socialnetwork", "3307" );
         //verification
         if ($mysqli->connect_errno)
         {
@@ -61,15 +61,16 @@
                  */
                 while ($tag = $lesInformations->fetch_assoc())
                 {
-                    echo "<pre>" . print_r($tag, 1) . "</pre>";
+                    $id = print_r($tag['id'], 1);
+                    echo "<article>";
+                    echo "<h3>" . print_r($tag['label'], 1) . "</h3>";
+                    echo "<p>" . "id:" . print_r($tag['id'], 1) . "</p>";
+                    echo "<nav>";
+                    echo  "<a href='tags.php?tag_id=$id'>" . "Messages" . "</a>" ;
+                    echo "</nav>";
+                    echo "</article>";
                     ?>
-                    <article>
-                        <h3>#chaussette</h3>
-                        <p>id:321</p>
-                        <nav>
-                            <a href="tags.php?tag_id=321">Messages</a>
-                        </nav>
-                    </article>
+
                 <?php } ?>
             </aside>
             <main>

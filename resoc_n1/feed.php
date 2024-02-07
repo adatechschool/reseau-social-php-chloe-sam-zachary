@@ -18,7 +18,8 @@ include 'header.php';
             /**
              * Etape 2: se connecter à la base de donnée
              */
-            $mysqli = new mysqli("localhost", "root", "", "socialnetwork", "3307");
+            include 'variables.php';
+            $mysqli = new mysqli($server, $account, $password, $database, $port);
             ?>
 
             <aside>

@@ -40,7 +40,7 @@ include 'header.php';
                 {
                     $id = print_r($tag['id'], 1);
                     echo "<article>";
-                    echo "<h3>" . print_r($tag['label'], 1) . "</h3>";
+                    echo "<h3>" . "#" . print_r($tag['label'], 1) . "</h3>";
                     echo "<p>" . "id:" . print_r($tag['id'], 1) . "</p>";
                     echo "<nav>";
                     echo  "<a href='tags.php?tag_id=$id'>" . "Messages" . "</a>" ;

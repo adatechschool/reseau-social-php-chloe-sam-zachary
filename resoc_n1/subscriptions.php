@@ -32,6 +32,8 @@ include 'header.php';
                     GROUP BY users.id
                     ";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
+                $user = $lesInformations->fetch_assoc();
+                echo "<pre>" . print_r($user, 1) . "</pre>";
                 // Etape 4: à vous de jouer
                 //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous 
                 ?>

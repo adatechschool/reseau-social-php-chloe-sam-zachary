@@ -69,19 +69,17 @@ include 'header.php';
                 {
                     //la ligne ci-dessous doit etre supprimée mais regardez ce 
                     //qu'elle affiche avant pour comprendre comment sont organisées les information dans votre 
-
-
                     // @todo : Votre mission c'est de remplacer les AREMPLACER par les bonnes valeurs
                     // ci-dessous par les bonnes valeurs cachées dans la variable $post 
                     // on vous met le pied à l'étrier avec created
                     // 
                     // avec le ? > ci-dessous on sort du mode php et on écrit du html comme on veut... mais en restant dans la boucle
-                    ?>
+                   ?>
                     <article>
                         <h3>
                             <time><?php echo $post['created'] ?></time>
                         </h3>
-                        <address>par : <?php echo $post['author_name'] ?></address>
+                        <address>par : <a href="wall.php?user_id=#>"><?php echo $post['author_name'] ?></a></address>
                         <div>
                             <p><?php echo $post['content'] ?></p>
                         </div>

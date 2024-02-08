@@ -36,7 +36,7 @@ include 'header.php';
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez les derniers messages comportant
-                        le mot-clé XXX
+                        le #<a href="tags.php?tag_id=<?php echo $tag['id'] ?>"><?php echo $tag['label'] ?></a> 
                         (n° <?php echo $tagId ?>)
                     </p>
 
@@ -52,7 +52,7 @@ include 'header.php';
                     posts.created,
                     users.alias as author_name,  
                     count(likes.id) as like_number,  
-                    GROUP_CONCAT(DISTINCT tags.label) AS taglist 
+                    GROUP_CONCAT(DISTINCT tags.label, tags.id) AS taglist 
                     FROM posts_tags as filter 
                     JOIN posts ON posts.id=filter.post_id
                     JOIN users ON users.id=posts.user_id
@@ -75,26 +75,28 @@ include 'header.php';
                 while ($post = $lesInformations->fetch_assoc())
                 {
 
-                    echo "<pre>" . print_r($post, 1) . "</pre>";
                     ?>                
-                    <article>
-                        <h3>
-                            <time datetime='2020-02-01 11:12:13' >31 février 2010 à 11h12</time>
-                        </h3>
-                        <address>par AreTirer</address>
-                        <div>
-                            <p>Ceci est un paragraphe</p>
-                            <p>Ceci est un autre paragraphe</p>
-                            <p>... de toutes manières il faut supprimer cet 
-                                article et le remplacer par des informations en 
-                                provenance de la base de donnée</p>
-                        </div>                                            
-                        <footer>
-                            <small>♥ 132</small>
-                            <a href="">#lorem</a>,
-                            <a href="">#piscitur</a>,
-                        </footer>
-                    </article>
+                <article>
+                    <h3>
+                        <time datetime='2020-02-01 11:12:13' > <?php echo $post['created'] ?></time>
+                    </h3>
+                    <address><?php echo $post['author_name'] ?></address>
+                    <div>
+                        <p> <?php echo $post['content'] ?></p>
+
+                    </div>                                            
+                    <footer>
+                        <small>♥ <?php echo $post['like_number'] ?></small>
+                        <?php
+                            $tagsArray = explode(",", $post['taglist']);
+                            foreach ($tagsArray as $tag) {
+                            ?> 
+                                <a href="tags.php?tag_id=<?php echo substr($tag, -1) ?>">#<?php echo substr($tag, 0, -1) ?></a>
+                            <?php
+                            }
+                            ?>
+                    </footer>
+                </article>
                 <?php } ?>
 
 

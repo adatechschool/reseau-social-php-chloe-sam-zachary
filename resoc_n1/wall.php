@@ -35,7 +35,7 @@ include 'header.php';
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
-                    <p>Sur cette page vous trouverez tous les message de l'utilisatrice : XXX
+                    <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <a href="tags.php?tag_id=<?php echo $user['id'] ?>"><?php echo $user['alias'] ?></a>
                         (n° <?php echo $userId ?>)
                     </p>
                 </section>
@@ -47,7 +47,7 @@ include 'header.php';
                  */
                 $laQuestionEnSql = "
                     SELECT posts.content, posts.created, users.alias as author_name, 
-                    COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label) AS taglist 
+                    COUNT(likes.id) as like_number, GROUP_CONCAT(DISTINCT tags.label, tags.id) AS taglist 
                     FROM posts
                     JOIN users ON  users.id=posts.user_id
                     LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
@@ -69,24 +69,26 @@ include 'header.php';
                 while ($post = $lesInformations->fetch_assoc())
                 {
 
-                    echo "<pre>" . print_r($post, 1) . "</pre>";
+
                     ?>                
                     <article>
                         <h3>
-                            <time datetime='2020-02-01 11:12:13' >31 février 2010 à 11h12</time>
+                            <time datetime='2020-02-01 11:12:13' > <?php echo $post['created']?> </time>
                         </h3>
-                        <address>par AreTirer</address>
+                        <address><?php echo $post['author_name']?></address>
                         <div>
-                            <p>Ceci est un paragraphe</p>
-                            <p>Ceci est un autre paragraphe</p>
-                            <p>... de toutes manières il faut supprimer cet 
-                                article et le remplacer par des informations en 
-                                provenance de la base de donnée</p>
+                            <p><?php echo $post['content']?></p>
                         </div>                                            
                         <footer>
-                            <small>♥ 132</small>
-                            <a href="">#lorem</a>,
-                            <a href="">#piscitur</a>,
+                            <small>♥<?php echo $post['like_number']?></small>
+                            <?php
+                            $tagsArray = explode(",", $post['taglist']);
+                            foreach ($tagsArray as $tag) {
+                            ?> 
+                                <a href="tags.php?tag_id=<?php echo substr($tag, -1) ?>">#<?php echo substr($tag, 0, -1) ?></a>
+                            <?php
+                            }
+                            ?>
                         </footer>
                     </article>
                 <?php } ?>

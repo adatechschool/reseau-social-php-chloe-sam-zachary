@@ -3,8 +3,8 @@ $server = "localhost";
 $account = "root";
 $password = "";
 $database = "socialnetwork";
-$database2 = "socialnetwork_tests";
-$port = "3307"
+$database2 = "socialnetwork";
+$port = "3306"
 ?>
 
 

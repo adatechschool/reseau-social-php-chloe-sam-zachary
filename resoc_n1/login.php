@@ -29,8 +29,8 @@ session_start();
                         // observez le résultat de cette ligne de débug (vous l'effacerez ensuite)
                         echo "<pre>" . print_r($_POST, 1) . "</pre>";
                         // et complétez le code ci dessous en remplaçant les ???
-                        $emailAVerifier = $_POST['???'];
-                        $passwdAVerifier = $_POST['???'];
+                        $emailAVerifier = $_POST['email'];
+                        $passwdAVerifier = $_POST['motpasse'];
 
 
                         //Etape 3 : Ouvrir une connexion avec la base de donnée.
@@ -44,11 +44,9 @@ session_start();
                         $passwdAVerifier = md5($passwdAVerifier);
                         // NB: md5 est pédagogique mais n'est pas recommandée pour une vraies sécurité
                         //Etape 5 : construction de la requete
-                        $lInstructionSql = "SELECT * "
-                                . "FROM users "
-                                . "WHERE "
-                                . "email LIKE '" . $emailAVerifier . "'"
-                                ;
+                        $lInstructionSql = "SELECT *
+                                            FROM users
+                                            WHERE email LIKE '$emailAVerifier'";
                         // Etape 6: Vérification de l'utilisateur
                         $res = $mysqli->query($lInstructionSql);
                         $user = $res->fetch_assoc();
@@ -64,21 +62,28 @@ session_start();
                             $_SESSION['connected_id']=$user['id'];
                         }
                     }
-                    ?>                     
-                    <form action="login.php" method="post">
-                        <input type='hidden'name='???' value='achanger'>
-                        <dl>
-                            <dt><label for='email'>E-Mail</label></dt>
-                            <dd><input type='email'name='email'></dd>
-                            <dt><label for='motpasse'>Mot de passe</label></dt>
-                            <dd><input type='password'name='motpasse'></dd>
-                        </dl>
-                        <input type='submit'>
-                    </form>
-                    <p>
-                        Pas de compte?
-                        <a href='registration.php'>Inscrivez-vous.</a>
-                    </p>
+                    
+                    // si on n'a pas de session connectée, alors on affiche le formulaire :
+                    
+                    if(!$_SESSION['connected_id']) {
+                        ?>
+                        <form action="login.php" method="post">
+                            <input type='hidden'name='???' value='achanger'>
+                            <dl>
+                                <dt><label for='email'>E-Mail</label></dt>
+                                <dd><input type='email'name='email'></dd>
+                                <dt><label for='motpasse'>Mot de passe</label></dt>
+                                <dd><input type='password'name='motpasse'></dd>
+                            </dl>
+                            <input type='submit'>
+                        </form>
+                        <p>
+                            Pas de compte?
+                            <a href='registration.php'>Inscrivez-vous.</a>
+                        </p>
+                    <?php } else { ?>
+                        <p>Bonjour, vous êtes déjà connectée.</p>
+                    <?php } ?>
 
                 </article>
             </main>

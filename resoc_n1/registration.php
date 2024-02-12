@@ -25,9 +25,9 @@ include 'header.php';
                         // observez le résultat de cette ligne de débug (vous l'effacerez ensuite)
                         echo "<pre>" . print_r($_POST, 1) . "</pre>";
                         // et complétez le code ci dessous en remplaçant les ???
-                        $new_email = $_POST['???'];
-                        $new_alias = $_POST['???'];
-                        $new_passwd = $_POST['???'];
+                        $new_email = $_POST['email'];
+                        $new_alias = $_POST['pseudo'];
+                        $new_passwd = $_POST['motpasse'];
 
 
                         //Etape 3 : Ouvrir une connexion avec la base de donnée.
@@ -42,12 +42,8 @@ include 'header.php';
                         $new_passwd = md5($new_passwd);
                         // NB: md5 est pédagogique mais n'est pas recommandée pour une vraies sécurité
                         //Etape 5 : construction de la requete
-                        $lInstructionSql = "INSERT INTO users (id, email, password, alias) "
-                                . "VALUES (NULL, "
-                                . "'" . $new_email . "', "
-                                . "'" . $new_passwd . "', "
-                                . "'" . $new_alias . "'"
-                                . ");";
+                        $lInstructionSql = "INSERT INTO users (id, email, password, alias)
+                                            VALUES (NULL, '$new_email','$new_passwd','$new_alias');";
                         // Etape 6: exécution de la requete
                         $ok = $mysqli->query($lInstructionSql);
                         if ( ! $ok)

@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+// déconnecter le user
+if (isset($_POST['logout'])) {
+    $_SESSION = array();    
+}
+?>
+
 <!doctype html>
 <html lang="fr">
     <head>
@@ -14,7 +23,15 @@
                 <a href="wall.php?user_id=5">Mur</a>
                 <a href="feed.php?user_id=5">Flux</a>
                 <a href="tags.php?tag_id=1">Mots-clés</a>
+            
+            <?php
+            if (isset($_SESSION['connected_id'])){ ?>
+                <form action="login.php" method="post">
+                    <input type='submit'name='logout' value="Se déconnecter">
+                </form>
+            <?php } ?>
             </nav>
+
             <nav id="user">
                 <a href="#">Profil</a>
                 <ul>

@@ -49,7 +49,12 @@ include 'header.php';
                     }
                     
                     // si on n'a pas de session connectée, alors on affiche le formulaire :
-                    if(!$_SESSION['connected_id']) {
+                    if (isset($_POST['logout'])){ 
+                        ?>
+                        <p>Vous avez bien été déconnecté-e. </p>
+                        <?php
+                    }
+                    if(empty($_SESSION)) {
                         ?>
                         <form action="login.php" method="post">
                             <dl>
@@ -65,7 +70,7 @@ include 'header.php';
                             <a href='registration.php'>Inscrivez-vous.</a>
                         </p>
                     <?php } else { ?>
-                        <p>Bonjour, vous êtes déjà connectée.</p>
+                        <p>Bonjour ! Vous êtes connectée.</p>
                     <?php } ?>
 
                 </article>

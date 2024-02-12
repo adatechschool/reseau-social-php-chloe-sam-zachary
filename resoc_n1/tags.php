@@ -3,29 +3,19 @@ $pageTitle = 'ReSoC - Les message par mot-clé';
 include 'header.php';
 ?>
         <div id="wrapper">
+            
             <?php
-            /**
-             * Cette page est similaire à wall.php ou feed.php 
-             * mais elle porte sur les mots-clés (tags)
-             */
-            /**
-             * Etape 1: Le mur concerne un mot-clé en particulier
-             */
+            // Etape 1: Le mur concerne un mot-clé en particulier
             $tagId = intval($_GET['tag_id']);
-            ?>
-            <?php
-            /**
-             * Etape 2: se connecter à la base de donnée
-             */
+            // Etape 2: se connecter à la base de données
             include 'variables.php';
             $mysqli = new mysqli($server, $account, $password, $database, $port);
             ?>
 
             <aside>
+
                 <?php
-                /**
-                 * Etape 3: récupérer le nom du mot-clé
-                 */
+                // Etape 3: récupérer le nom du mot-clé
                 $laQuestionEnSql = "SELECT * FROM tags WHERE id= '$tagId' ";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 $tag = $lesInformations->fetch_assoc();
@@ -36,68 +26,33 @@ include 'header.php';
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez les derniers messages comportant
-                        le #<a href="tags.php?tag_id=<?php echo $tag['id'] ?>"><?php echo $tag['label'] ?></a> 
-                        (n° <?php echo $tagId ?>)
+                        le #<a href="tags.php?tag_id=<?= $tagId ?>"><?= $tag['label'] ?></a> 
+                        (n° <?= $tagId ?>)
                     </p>
 
                 </section>
             </aside>
             <main>
                 <?php
-                /**
-                 * Etape 3: récupérer tous les messages avec un mot clé donné
-                 */
-                $laQuestionEnSql = "
-                    SELECT posts.content,
-                    posts.created,
-                    users.alias as author_name,  
-                    count(likes.id) as like_number,  
-                    GROUP_CONCAT(DISTINCT tags.label, tags.id) AS taglist 
-                    FROM posts_tags as filter 
-                    JOIN posts ON posts.id=filter.post_id
-                    JOIN users ON users.id=posts.user_id
-                    LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
-                    LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
-                    LEFT JOIN likes      ON likes.post_id  = posts.id 
-                    WHERE filter.tag_id = '$tagId' 
-                    GROUP BY posts.id
-                    ORDER BY posts.created DESC  
-                    ";
-                $lesInformations = $mysqli->query($laQuestionEnSql);
-                if ( ! $lesInformations)
-                {
-                    echo("Échec de la requete : " . $mysqli->error);
-                }
-
-                /**
-                 * Etape 4: @todo Parcourir les messsages et remplir correctement le HTML avec les bonnes valeurs php
-                 */
-                while ($post = $lesInformations->fetch_assoc())
-                {
-
-                    ?>                
-                <article>
-                    <h3>
-                        <time datetime='2020-02-01 11:12:13' > <?php echo $post['created'] ?></time>
-                    </h3>
-                    <address><?php echo $post['author_name'] ?></address>
-                    <div>
-                        <p> <?php echo $post['content'] ?></p>
-
-                    </div>                                            
-                    <footer>
-                        <small>♥ <?php echo $post['like_number'] ?></small>
-                        <?php
-                            $tagsArray = explode(",", $post['taglist']);
-                            foreach ($tagsArray as $tag) {
-                            ?> 
-                                <a href="tags.php?tag_id=<?php echo substr($tag, -1) ?>">#<?php echo substr($tag, 0, -1) ?></a>
-                            <?php
-                            }
-                            ?>
-                    </footer>
-                </article>
-                <?php } ?>
+                // Etape 3: récupérer tous les messages avec un mot clé donné
+                $laQuestionEnSql = "SELECT posts.content,
+                                        posts.created,
+                                        users.alias as author_name,  
+                                        count(likes.id) as like_number,  
+                                        GROUP_CONCAT(DISTINCT tags.label, tags.id) AS taglist 
+                                    FROM posts_tags as filter 
+                                    JOIN posts ON posts.id=filter.post_id
+                                    JOIN users ON users.id=posts.user_id
+                                    LEFT JOIN posts_tags ON posts.id = posts_tags.post_id  
+                                    LEFT JOIN tags       ON posts_tags.tag_id  = tags.id 
+                                    LEFT JOIN likes      ON likes.post_id  = posts.id 
+                                    WHERE filter.tag_id = '$tagId' 
+                                    GROUP BY posts.id
+                                    ORDER BY posts.created DESC";
+                
+                // afficher les messages
+                include 'printPosts.php';
+                ?>
 
 
             </main>

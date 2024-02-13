@@ -36,8 +36,14 @@ if (isset($_POST['logout'])) {
                 <a href="#">Profil</a>
                 <ul>
                     <li><a href="settings.php?user_id=5">Paramètres</a></li>
+                    <?php
+                    if (isset ($_SESSION['connected_id'])) { ?>
                     <li><a href="followers.php?user_id=5">Mes suiveurs</a></li>
                     <li><a href="subscriptions.php?user_id=5">Mes abonnements</a></li>
+                    <?php } else { ?>
+                    <li><a href="login.php?">login</a></li>
+                        <?php
+                    } ?>
                 </ul>
 
             </nav>

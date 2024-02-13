@@ -1,4 +1,5 @@
 <?php 
+session_start();
 $pageTitle = 'ReSoC - Mur';
 include 'header.php';
 ?>
@@ -12,6 +13,7 @@ include 'header.php';
              * ... mais en résumé c'est une manière de passer des informations à la page en ajoutant des choses dans l'url
              */
             $userId =intval($_GET['user_id']);
+            $userSessionId = $_SESSION['connected_id']
             ?>
             <?php
             /**
@@ -60,11 +62,23 @@ include 'header.php';
                                     GROUP BY posts.id
                                     ORDER BY posts.created DESC  
                                     ";
-                    
-                    include 'printPosts.php';
                     ?>
 
+                    <form action="wall.php" method="post" >
+                        <article>    
+                            <h2>Poster un message</h2>
+                            <dl>
+                                <dt><label for='auteur'>Auteur :</label> <?php echo $userSessionId ?></dt>
+                                <dt><label for='message'>Message</label></dt>
+                                <dd><textarea name='message'></textarea></dd>
+                            </dl>
+                            <input type='submit'>
+                        </article>
+                    </form>
 
+                    <?php
+                    include 'printPosts.php';
+                    ?>
             </main>
         </div>
     </body>

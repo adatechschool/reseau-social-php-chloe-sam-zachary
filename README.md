@@ -25,3 +25,13 @@ Mercredi 7/2
 
 - rectification et complétion du code sur principalement les pages : admin.php, news.php, settings.php, subscriptions.php et followers.php
 - refactor du header et de la requête mysqli
+
+Jeudi 8/2
+
+- avancement sur la fin du niveau 1
+- refacto des nouveaux fichiers du niveau 2
+
+Lundi 12/2
+
+- rectification des problèmes liés à la connexion d'un compte : inscription.php et login.php ne prenaient pas la bonne valeur.
+- création d'un interface pour poster des messages sur wall.php

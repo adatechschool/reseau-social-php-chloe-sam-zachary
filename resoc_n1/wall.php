@@ -1,8 +1,27 @@
 <?php 
+include 'variables.php';
+$mysqli = new mysqli($server, $account, $password, $database, $port);
 session_start();
 $pageTitle = 'ReSoC - Mur';
 include 'header.php';
+if(isset($_POST['message'])) {
+    
+    $content = $_POST['message'];
+    $lInstructionSql = "INSERT INTO posts (id, user_id, content, created, parent_id)
+                        VALUES (NULL, {$_SESSION['connected_id']},'$content', NOW(), NULL);";
+    // Etape 5 : execution
+    $ok = $mysqli->query($lInstructionSql);
+    if ( ! $ok)
+    {
+        echo "Impossible d'ajouter le message: " . $mysqli->error;
+    } else
+    {
+        // echo "Message posté en tant que :" . $_SESSION['connected_id'];
+    }
+}
+
 ?>
+
         <div id="wrapper">
             <?php
             /**
@@ -19,8 +38,7 @@ include 'header.php';
             /**
              * Etape 2: se connecter à la base de donnée
              */
-            include 'variables.php';
-            $mysqli = new mysqli($server, $account, $password, $database, $port);
+                //
             ?>
 
             <aside>
@@ -61,10 +79,10 @@ include 'header.php';
                                     WHERE posts.user_id='$userId' 
                                     GROUP BY posts.id
                                     ORDER BY posts.created DESC  
-                                    ";
+                                    ";                    
                     ?>
 
-                    <form action="wall.php" method="post" >
+                    <form action= <?= $_SERVER['REQUEST_URI'] ?> method="post" name="message-form" >
                         <article>    
                             <h2>Poster un message</h2>
                             <dl>
@@ -72,11 +90,13 @@ include 'header.php';
                                 <dt><label for='message'>Message</label></dt>
                                 <dd><textarea name='message'></textarea></dd>
                             </dl>
-                            <input type='submit'>
+                            <input type='submit' value="post" >
                         </article>
                     </form>
 
+
                     <?php
+
                     include 'printPosts.php';
                     ?>
             </main>

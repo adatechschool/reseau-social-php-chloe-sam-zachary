@@ -53,13 +53,14 @@ if(isset($_POST['message'])) {
                 $lesInformations = $mysqli->query($laQuestionEnSql);
                 $user = $lesInformations->fetch_assoc();
                 //@todo: afficher le résultat de la ligne ci dessous, remplacer XXX par l'alias et effacer la ligne ci-dessous
-                echo "<pre>" . print_r($user, 1) . "</pre>";
+                // echo "<pre>" . print_r($user, 1) . "</pre>";
                 ?>
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
                     <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <a href="tags.php?tag_id=<?php echo $user['id'] ?>"><?php echo $user['alias'] ?></a>
                         (n° <?php echo $userId ?>)
+                        <?php include 'follow.php';?>
                     </p>
                 </section>
             </aside>

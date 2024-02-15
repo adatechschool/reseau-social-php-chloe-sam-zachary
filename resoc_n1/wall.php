@@ -31,6 +31,11 @@ if(isset($_POST['message'])) {
              * ... mais en résumé c'est une manière de passer des informations à la page en ajoutant des choses dans l'url
              */
             $userId =intval($_GET['user_id']); 
+            if ($userId == "0"){ ?>
+                <aside> Vous n'avez pas accès à cette page. <a href='login.php'>Merci de vous connecter.</a></aside>
+                <?php
+                exit();
+            }
             ?>
             <?php
             /**

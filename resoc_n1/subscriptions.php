@@ -42,14 +42,15 @@ include 'header.php';
                 $user = $lesInformations->fetch_assoc();
                 
                 // Etape 4: afficher les abonnés
-                while ($user = $lesInformations->fetch_assoc()) { ?>
-                    <article>
+
+                while ($user = $lesInformations->fetch_assoc()) { 
+                    echo "<pre>" . print_r($user, 1) . "</pre>";
+                    ?>
+                    <article><a href="wall.php?user_id=<?= $user['id'] ?>">
                         <img src="user.jpg" alt="blason"/>
-                        <h3>
-                            <a href="wall.php?user_id=<?= $user['id'] ?>"><?= $user['alias'] ?></a>
-                        </h3>
-                        <p>id : <?= $user['id'] ?></p>
-                    </article>
+                        <h3><?= $user['alias'] ?></h3>
+                        <p>id : <?= $user['id'] ?></p>                    
+                        </a></article>
                 <?php } ?>
                 
             </main>

@@ -49,7 +49,7 @@ include 'header.php';
                     }
                     
                     // si on n'a pas de session connectée, alors on affiche le formulaire :
-                    if (isset($_POST['logout'])){ 
+                    if (isset($_POST['logout'])){
                         ?>
                         <p>Vous avez bien été déconnecté-e. </p>
                         <?php

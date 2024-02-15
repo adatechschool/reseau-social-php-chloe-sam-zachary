@@ -44,6 +44,7 @@ include 'header.php';
                 //@todo: faire la boucle while de parcours des abonnés et mettre les bonnes valeurs ci dessous 
                 ?>
                 <?php
+
                 while ($user = $lesInformations->fetch_assoc()) { ?>
 
                     <article><a href="wall.php?user_id=<?= $user['id'] ?>">

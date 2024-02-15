@@ -11,7 +11,11 @@ include 'header.php';
              * Documentation : https://www.php.net/manual/fr/reserved.variables.get.php
              * ... mais en résumé c'est une manière de passer des informations à la page en ajoutant des choses dans l'url
              */
-            $userId =intval($_GET['user_id']);
+                if ($_GET['user_id']) {
+                    $userId =intval($_GET['user_id']);
+                } else {
+                    $userId = $_SESSION['connected_id'];
+                }
             ?>
             <?php
             /**
@@ -20,6 +24,7 @@ include 'header.php';
             include 'variables.php';
             $mysqli = new mysqli($server, $account, $password, $database, $port);
             ?>
+            
 
             <aside>
                 <?php
@@ -35,9 +40,12 @@ include 'header.php';
                 <img src="user.jpg" alt="Portrait de l'utilisatrice"/>
                 <section>
                     <h3>Présentation</h3>
-                    <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <a href="tags.php?tag_id=<?php echo $user['id'] ?>"><?php echo $user['alias'] ?></a>
+                    <p>Sur cette page vous trouverez tous les message de l'utilisatrice : <?php echo $user['alias'] ?></a>
                         (n° <?php echo $userId ?>)
                     </p>
+                    <?php 
+                    include 'follow.php';
+                    ?>
                 </section>
             </aside>
             <main>

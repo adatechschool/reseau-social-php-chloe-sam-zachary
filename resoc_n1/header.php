@@ -17,32 +17,27 @@ if (isset($_POST['logout'])) {
     </head>
     <body>
         <header>
+        <!-- <?php echo $_SESSION['connected_id']?> -->
             <a href='admin.php'><img src="resoc.jpg" alt="Logo de notre réseau social"/></a>
             <nav id="menu">
                 <a href="news.php">Actualités</a>
-                <a href="wall.php?user_id=5">Mur</a>
-                <a href="feed.php?user_id=5">Flux</a>
+                <a href="wall.php?user_id=<?= isset($_SESSION['connected_id']) ? $_SESSION['connected_id'] : "0" ?>">Mur</a>
+                <a href="feed.php?user_id=<?= isset($_SESSION['connected_id']) ? $_SESSION['connected_id'] : "0"?>">Flux</a>
                 <a href="tags.php?tag_id=1">Mots-clés</a>
-            
-            <?php
-            if (isset($_SESSION['connected_id'])){ ?>
-                <form action="login.php" method="post">
-                    <input type='submit'name='logout' value="Se déconnecter">
-                </form>
-            <?php } ?>
             </nav>
 
             <nav id="user">
-                <a href="#">Profil</a>
+                <a href="login.php">Profil</a>
                 <ul>
-                    <li><a href="settings.php?user_id=5">Paramètres</a></li>
                     <?php
                     if (isset ($_SESSION['connected_id'])) { ?>
-                    <li><a href="followers.php?user_id=5">Mes suiveurs</a></li>
-                    <li><a href="subscriptions.php?user_id=5">Mes abonnements</a></li>
-                    <?php } else { ?>
-                    <li><a href="login.php?">login</a></li>
-                        <?php
+                        <li><a href="settings.php?user_id=<?php echo $_SESSION['connected_id']?>">Paramètres</a></li>
+                        <li><a href="followers.php?user_id=<?php echo $_SESSION['connected_id']?>">Mes suiveurs</a></li>
+                        <li><a href="subscriptions.php?user_id=<?php echo $_SESSION['connected_id']?>">Mes abonnements</a></li>
+                        <form action="login.php" method="post">
+                        <input type='submit'name='logout' value="Se déconnecter">
+                        </form>
+                    <?php
                     } ?>
                 </ul>
 

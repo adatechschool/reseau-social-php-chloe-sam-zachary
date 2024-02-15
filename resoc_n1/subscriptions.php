@@ -33,13 +33,12 @@ include 'header.php';
                 include 'variables.php';
                 $mysqli = new mysqli($server, $account, $password, $database, $port);
                 // Etape 3: récupérer le nom de l'utilisateur
-                $laQuestionEnSql = "SELECT users.* 
+                $laQuestionEnSql = "SELECT users.alias, users.id 
                                     FROM followers 
                                     LEFT JOIN users ON users.id=followers.followed_user_id 
                                     WHERE followers.following_user_id='$userId'
                                     GROUP BY users.id;";
                 $lesInformations = $mysqli->query($laQuestionEnSql);
-                $user = $lesInformations->fetch_assoc();
                 
                 // Etape 4: afficher les abonnés
                 while ($user = $lesInformations->fetch_assoc()) { ?>
